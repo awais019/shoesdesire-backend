@@ -107,14 +107,11 @@ model User {
   role      ROLE     @default(USER)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  Cart      Cart[]
   Order     Order[]
 }
 
 model Cart {
   id        String     @id @default(uuid())
-  User      User       @relation(fields: [userId], references: [id])
-  userId    String
   total     Float
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
