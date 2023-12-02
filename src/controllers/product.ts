@@ -26,4 +26,11 @@ export default {
 
     return APIHelpers.sendSuccess(res, products);
   },
+  getByCategory: async (req: Request, res: Response) => {
+    const products = await productService.getByCategory(
+      req.params.categoryId as string
+    );
+
+    return APIHelpers.sendSuccess(res, products);
+  },
 };

@@ -1,3 +1,4 @@
+import { create } from "domain";
 import prisma from "../prisma/prisma";
 
 export default {
@@ -40,8 +41,66 @@ export default {
   },
   getAll: () => {
     return prisma.product.findMany({
+      orderBy: {
+        createdAt: "desc",
+      },
       include: {
         Images: true,
+        ProductColor: {
+          select: {
+            Color: {
+              select: {
+                name: true,
+                hex: true,
+              },
+            },
+          },
+        },
+        ProductSize: {
+          select: {
+            Size: {
+              select: {
+                size: true,
+              },
+            },
+          },
+        },
+      },
+    });
+  },
+  getByCategory: (categoryId: string) => {
+    return prisma.product.findMany({
+      where: {
+        ProductCategory: {
+          some: {
+            categoryId,
+          },
+        },
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+      include: {
+        Images: true,
+        ProductColor: {
+          select: {
+            Color: {
+              select: {
+                name: true,
+                hex: true,
+              },
+            },
+          },
+        },
+        ProductSize: {
+          select: {
+            Size: {
+              select: {
+                size: true,
+              },
+            },
+          },
+        },
       },
     });
   },

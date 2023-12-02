@@ -16,4 +16,6 @@ router.post(
 
 router.get("/", tryCatch(productController.getAll));
 
+router.get("/:categoryId", tryCatch(productController.getByCategory));
+
 export default router;
