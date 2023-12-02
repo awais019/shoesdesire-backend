@@ -19,7 +19,10 @@ export default {
   AUTH_REQUIRED_MESSAGE: "Authentication required",
   INVALID_TOKEN_MESSAGE: "Invalid token",
   FILE_NOT_FOUND_MESSAGE: "File not found",
+  IMAGE_NOT_PROVIDED_MESSAGE: "Image not provided",
   INVALID_CREDENTIALS_MESSAGE: "Invalid credentials",
 
   AUTH_HEADER_NAME: "x-auth-token",
+
+  IMAGES_PATH: "images",
 };
