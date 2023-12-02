@@ -27,6 +27,7 @@ model Product {
   slug            String            @unique
   description     String            @db.VarChar(1024)
   price           Float
+  stock           Int
   createdAt       DateTime          @default(now())
   updatedAt       DateTime          @updatedAt
   ProductCategory ProductCategory[]

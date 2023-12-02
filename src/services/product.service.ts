@@ -3,7 +3,13 @@ import prisma from "../prisma/prisma";
 
 export default {
   create: async (
-    product: { name: string; slug: string; description: string; price: number },
+    product: {
+      name: string;
+      slug: string;
+      description: string;
+      price: number;
+      stock: number;
+    },
     categoryId: string,
     sizes: string[],
     colors: string[]

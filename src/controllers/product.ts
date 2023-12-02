@@ -9,6 +9,7 @@ export default {
       name: req.body.name,
       description: req.body.description,
       price: req.body.price,
+      stock: req.body.stock,
       slug: req.body.name.toLowerCase().replace(/\s/g, "-"),
     };
 
