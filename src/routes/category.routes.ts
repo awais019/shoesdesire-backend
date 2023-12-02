@@ -13,4 +13,6 @@ router.post(
   tryCatch(categoryController.create)
 );
 
+router.get("/", tryCatch(categoryController.getAll));
+
 export default router;

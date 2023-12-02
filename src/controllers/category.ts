@@ -31,4 +31,16 @@ export default {
       constants.SUCCESS_MESSAGE
     );
   },
+  getAll: async (req: Request, res: Response) => {
+    const categories = (await categoryService.getAll()).map((c) => {
+      return {
+        id: c.id,
+        name: c.name,
+        slug: c.slug,
+        imageUrl: c.CategoryImage[0]?.url,
+      };
+    });
+
+    return APIHelpers.sendSuccess(res, categories);
+  },
 };

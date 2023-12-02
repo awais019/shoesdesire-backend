@@ -32,4 +32,21 @@ export default {
       },
     });
   },
+  getAll: () => {
+    return prisma.category.findMany({
+      select: {
+        id: true,
+        name: true,
+        slug: true,
+        CategoryImage: {
+          select: {
+            url: true,
+          },
+        },
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+  },
 };
