@@ -38,4 +38,11 @@ export default {
       return newProduct;
     });
   },
+  getAll: () => {
+    return prisma.product.findMany({
+      include: {
+        Images: true,
+      },
+    });
+  },
 };

@@ -32,7 +32,7 @@ model Product {
   ProductCategory ProductCategory[]
   ProductSize     ProductSize[]
   ProductColor    ProductColor[]
-  Image           ProductImage[]
+  Images          ProductImage[]
   CartItem        CartItem[]
   OrderDetail     OrderDetail[]
 }

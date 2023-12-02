@@ -21,4 +21,9 @@ export default {
 
     return APIHelpers.sendSuccess(res, newProduct);
   },
+  getAll: async (req: Request, res: Response) => {
+    const products = await productService.getAll();
+
+    return APIHelpers.sendSuccess(res, products);
+  },
 };

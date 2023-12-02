@@ -14,4 +14,6 @@ router.post(
   tryCatch(productController.create)
 );
 
+router.get("/", tryCatch(productController.getAll));
+
 export default router;
