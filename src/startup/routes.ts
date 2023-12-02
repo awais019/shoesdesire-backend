@@ -4,6 +4,7 @@ import adminRoutes from "../routes/admin.routes";
 import authRoutes from "../routes/auth.routes";
 import categoryRoutes from "../routes/category.routes";
 import sizeColorRoutes from "../routes/size&color.routes";
+import productRoutes from "../routes/product.routes";
 
 export default function (app: Express) {
   app.use("/api", index);
@@ -11,4 +12,5 @@ export default function (app: Express) {
   app.use("/api/admin", adminRoutes);
   app.use("/api/auth", authRoutes);
   app.use("/api/categories", categoryRoutes);
+  app.use("/api/products", productRoutes);
 }
