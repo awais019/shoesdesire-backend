@@ -38,6 +38,7 @@ export default {
         id: true,
         name: true,
         slug: true,
+        description: true,
         CategoryImage: {
           select: {
             url: true,
