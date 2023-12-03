@@ -37,7 +37,9 @@ export default {
         id: c.id,
         name: c.name,
         slug: c.slug,
+        description: c.description,
         imageUrl: c.CategoryImage[0]?.url,
+        productsCount: c.ProductCategory.length,
       };
     });
 

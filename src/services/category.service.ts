@@ -44,6 +44,11 @@ export default {
             url: true,
           },
         },
+        ProductCategory: {
+          select: {
+            productId: true,
+          },
+        },
       },
       orderBy: {
         createdAt: "desc",
