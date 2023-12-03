@@ -16,4 +16,17 @@ export default {
       },
     });
   },
+  get: (id: string) => {
+    return prisma.user.findUnique({
+      where: {
+        id,
+      },
+      select: {
+        id: true,
+        firstName: true,
+        lastName: true,
+        email: true,
+      },
+    });
+  },
 };

@@ -5,6 +5,7 @@ import cryptoHelpers from "../helpers/crypto";
 import jwtHelpers from "../helpers/jwt";
 import userService from "../services/user.service";
 import constants from "../constants";
+import { JwtPayload } from "jsonwebtoken";
 
 export default {
   signin: async (req: Request, res: Response) => {
@@ -35,5 +36,12 @@ export default {
     const token = jwtHelpers.sign({ _id: user.id, role: user.role });
 
     return APIHelpers.sendSuccess(res, { token }, constants.SUCCESS);
+  },
+  me: async (req: Request, res: Response) => {
+    const token = req.headers[constants.AUTH_HEADER_NAME] as string;
+    const { _id } = jwtHelpers.verify(token) as JwtPayload;
+    const user = await userService.get(_id);
+
+    return APIHelpers.sendSuccess(res, user, constants.SUCCESS);
   },
 };
