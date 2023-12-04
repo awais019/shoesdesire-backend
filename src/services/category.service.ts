@@ -34,6 +34,8 @@ export default {
   },
   getAll: () => {
     return prisma.category.findMany({
+      skip: 0,
+      take: 10,
       select: {
         id: true,
         name: true,

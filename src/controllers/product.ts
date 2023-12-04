@@ -49,6 +49,7 @@ export default {
           description: p.description,
           slug: p.slug,
           price: p.price,
+          stock: p.stock,
           images: p.Images.map((image) => image.url),
           totalCategories: p.ProductCategory.length,
           colorsAvailable: p.ProductColor.length,
