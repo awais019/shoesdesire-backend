@@ -1,4 +1,3 @@
-import { create } from "domain";
 import prisma from "../prisma/prisma";
 
 export default {
@@ -10,9 +9,10 @@ export default {
       price: number;
       stock: number;
     },
-    categoryId: string,
+    categories: string[],
     sizes: string[],
-    colors: string[]
+    colors: string[],
+    images: string[]
   ) => {
     return await prisma.$transaction(async () => {
       const newProduct = await prisma.product.create({
@@ -20,11 +20,13 @@ export default {
           ...product,
         },
       });
-      await prisma.productCategory.create({
-        data: {
-          productId: newProduct.id,
-          categoryId,
-        },
+      await prisma.productCategory.createMany({
+        data: categories.map((categoryId) => {
+          return {
+            productId: newProduct.id,
+            categoryId,
+          };
+        }),
       });
       await prisma.productSize.createMany({
         data: sizes.map((sizeId) => {
@@ -39,6 +41,14 @@ export default {
           return {
             productId: newProduct.id,
             colorId,
+          };
+        }),
+      });
+      await prisma.productImage.createMany({
+        data: images.map((url) => {
+          return {
+            url: `${process.env.BASE_URL}/images/${url}`,
+            productId: newProduct.id,
           };
         }),
       });

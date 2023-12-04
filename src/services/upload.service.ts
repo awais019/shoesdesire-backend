@@ -14,4 +14,19 @@ export default {
     });
     return fileName;
   },
+  bulkUpload: (files: UploadedFile[], folder: string) => {
+    const fileNames = files.map((file) => {
+      const fileName = `${Date.now()}-${file.name.replace(/\s/g, "")}`;
+      const filePath = `${__dirname}/../../public/uploads/${folder}/${fileName}`;
+
+      file.mv(filePath, (err) => {
+        if (err) {
+          logger.error(err);
+          return null;
+        }
+      });
+      return fileName;
+    });
+    return fileNames;
+  },
 };
