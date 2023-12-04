@@ -61,26 +61,14 @@ export default {
         createdAt: "desc",
       },
       include: {
-        Images: true,
-        ProductColor: {
+        Images: {
           select: {
-            Color: {
-              select: {
-                name: true,
-                hex: true,
-              },
-            },
+            url: true,
           },
         },
-        ProductSize: {
-          select: {
-            Size: {
-              select: {
-                size: true,
-              },
-            },
-          },
-        },
+        ProductCategory: true,
+        ProductColor: true,
+        ProductSize: true,
       },
     });
   },

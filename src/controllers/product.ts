@@ -40,7 +40,22 @@ export default {
   getAll: async (req: Request, res: Response) => {
     const products = await productService.getAll();
 
-    return APIHelpers.sendSuccess(res, products);
+    return APIHelpers.sendSuccess(
+      res,
+      products.map((p) => {
+        return {
+          id: p.id,
+          name: p.name,
+          description: p.description,
+          slug: p.slug,
+          price: p.price,
+          images: p.Images.map((image) => image.url),
+          totalCategories: p.ProductCategory.length,
+          colorsAvailable: p.ProductColor.length,
+          sizesAvailable: p.ProductSize.length,
+        };
+      })
+    );
   },
   getByCategory: async (req: Request, res: Response) => {
     const products = await productService.getByCategory(
