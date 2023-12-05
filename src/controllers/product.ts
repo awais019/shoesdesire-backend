@@ -38,7 +38,13 @@ export default {
     return APIHelpers.sendSuccess(res, newProduct);
   },
   getAll: async (req: Request, res: Response) => {
-    const products = await productService.getAll();
+    const { category, size, color } = req.query as {
+      category: string | undefined;
+      size: string | undefined;
+      color: string | undefined;
+    };
+
+    const products = await productService.getAll(category, size, color);
 
     return APIHelpers.sendSuccess(
       res,

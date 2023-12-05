@@ -55,8 +55,39 @@ export default {
       return newProduct;
     });
   },
-  getAll: () => {
+  getAll: (category?: string, size?: string, color?: string) => {
+    const filter = {} as any;
+
+    if (category) {
+      filter.ProductCategory = {
+        some: {
+          Category: {
+            name: category,
+          },
+        },
+      };
+    }
+    if (size) {
+      filter.ProductSize = {
+        some: {
+          Size: {
+            size: parseInt(size),
+          },
+        },
+      };
+    }
+    if (color) {
+      filter.ProductColor = {
+        some: {
+          Color: {
+            name: color,
+          },
+        },
+      };
+    }
+
     return prisma.product.findMany({
+      where: filter,
       orderBy: {
         createdAt: "desc",
       },
