@@ -45,4 +45,37 @@ export default {
 
     return APIHelpers.sendSuccess(res, categories);
   },
+  getMenCategories: async (req: Request, res: Response) => {
+    const menCategories = await categoryService.getMenCategories();
+    const WomenCategories = await categoryService.getWomenCategories();
+
+    const categories = [
+      {
+        name: "Men",
+        featured: menCategories.map((c) => {
+          return {
+            id: c.id,
+            name: c.name,
+            slug: c.slug,
+            description: c.description,
+            imageUrl: c.CategoryImage[0]?.url,
+          };
+        }),
+      },
+      {
+        name: "Women",
+        featured: WomenCategories.map((c) => {
+          return {
+            id: c.id,
+            name: c.name,
+            slug: c.slug,
+            description: c.description,
+            imageUrl: c.CategoryImage[0]?.url,
+          };
+        }),
+      },
+    ];
+
+    return APIHelpers.sendSuccess(res, categories);
+  },
 };

@@ -34,8 +34,8 @@ export default {
   },
   getAll: () => {
     return prisma.category.findMany({
-      skip: 0,
-      take: 10,
+      // skip: 0,
+      // take: 10,
       select: {
         id: true,
         name: true,
@@ -54,6 +54,72 @@ export default {
       },
       orderBy: {
         createdAt: "desc",
+      },
+    });
+  },
+  getMenCategories: async () => {
+    const products = await prisma.productCategory.findMany({
+      where: {
+        Category: {
+          slug: {
+            equals: "men's",
+          },
+        },
+      },
+      select: {
+        productId: true,
+      },
+    });
+
+    return prisma.category.findMany({
+      where: {
+        ProductCategory: {
+          some: {
+            productId: {
+              in: products.map((p) => p.productId),
+            },
+          },
+        },
+      },
+      include: {
+        CategoryImage: {
+          select: {
+            url: true,
+          },
+        },
+      },
+    });
+  },
+  getWomenCategories: async () => {
+    const products = await prisma.productCategory.findMany({
+      where: {
+        Category: {
+          slug: {
+            equals: "women's",
+          },
+        },
+      },
+      select: {
+        productId: true,
+      },
+    });
+
+    return prisma.category.findMany({
+      where: {
+        ProductCategory: {
+          some: {
+            productId: {
+              in: products.map((p) => p.productId),
+            },
+          },
+        },
+      },
+      include: {
+        CategoryImage: {
+          select: {
+            url: true,
+          },
+        },
       },
     });
   },

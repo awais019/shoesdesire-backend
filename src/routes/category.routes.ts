@@ -14,5 +14,6 @@ router.post(
 );
 
 router.get("/", tryCatch(categoryController.getAll));
+router.get("/men_women", tryCatch(categoryController.getMenCategories));
 
 export default router;
