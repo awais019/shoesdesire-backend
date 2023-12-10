@@ -102,18 +102,19 @@ model CategoryImage {
 }
 
 model User {
-  id        String   @id @default(uuid())
-  email     String   @unique
-  password  String
-  firstName String
-  lastName  String
-  role      ROLE     @default(USER)
-  address   String?
-  city      String?
-  state     String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  Order     Order[]
+  id             String   @id @default(uuid())
+  email          String   @unique
+  password       String
+  firstName      String
+  lastName       String
+  role           ROLE     @default(USER)
+  email_verified Boolean  @default(false)
+  address        String?
+  city           String?
+  state          String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  Order          Order[]
 }
 
 model Cart {

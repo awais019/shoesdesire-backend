@@ -12,4 +12,6 @@ router.post(
   tryCatch(userController.create)
 );
 
+router.post("/verify", tryCatch(userController.verifyEmail));
+
 export default router;
