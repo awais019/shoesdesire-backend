@@ -42,8 +42,6 @@ export default {
     });
   },
   sendEmail: async (user: User) => {
-    console.log(user.id);
-
     const token = jwtHelpers.sign({ id: user.id });
     const email = await ejsHelpers.renderHTMLFile("verify", {
       name: `${user.firstName} ${user.lastName}`,

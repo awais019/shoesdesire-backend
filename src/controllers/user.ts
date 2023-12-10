@@ -10,6 +10,16 @@ import { JwtPayload } from "jsonwebtoken";
 
 export default {
   create: async (req: Request, res: Response) => {
+    const _user = await userService.findByEmail(req.body.email);
+
+    if (_user) {
+      return APIHelpers.sendError(
+        res,
+        constants.BAD_REQUEST,
+        constants.EMAIL_EXISTS_MESSAGE
+      );
+    }
+
     let user = {
       ...req.body,
       password: cryptoHelpers.encryptPassword(req.body.password),
