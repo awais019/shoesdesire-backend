@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Email Verification - ShoesDesire</title>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        background-color: #f8f8f8;
+        color: #333;
+        line-height: 1.6;
+      }
+
+      .container {
+        max-width: 600px;
+        margin: 40px auto;
+        padding: 20px;
+        background-color: #ffffff;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        color: #444;
+        text-align: center;
+      }
+
+      a {
+        display: inline-block;
+        padding: 10px 25px;
+        margin: 20px 0;
+        background-color: #666;
+        color: #ffffff !important;
+        text-decoration: none;
+        border-radius: 5px;
+      }
+
+      a:hover {
+        background-color: #666;
+      }
+
+      .footer {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 0.8em;
+        color: #666;
+      }
+
+      .branding {
+        color: #333;
+        font-size: 1.2em;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="branding">ShoesDesire</div>
+      <h1>Hello <%= name %>,</h1>
+      <p>
+        Thank you for joining ShoesDesire! Please click the link below to verify
+        your email address and start exploring our exclusive collection:
+      </p>
+      <a href="<%= verificationUrl %>">Verify Email</a>
+      <p>
+        If you did not sign up for ShoesDesire, please disregard this email.
+      </p>
+      <div class="footer">
+        <p>
+          © <%= new Date().getFullYear() %> ShoesDesire. All rights reserved.
+        </p>
+      </div>
+    </div>
+  </body>
+</html>
