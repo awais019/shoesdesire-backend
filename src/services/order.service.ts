@@ -60,4 +60,14 @@ export default {
       },
     });
   },
+  updatePaymentStatus: (orderId: string, paymentStatus: boolean) => {
+    return prisma.order.update({
+      where: {
+        id: orderId,
+      },
+      data: {
+        paid: paymentStatus,
+      },
+    });
+  },
 };

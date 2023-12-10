@@ -70,4 +70,20 @@ export default {
       constants.SUCCESS
     );
   },
+
+  updatePaymentStatus: async (req: Request, res: Response) => {
+    const orderId = req.params.orderId;
+
+    if (!orderId) {
+      return APIHelpers.sendError(
+        res,
+        constants.BAD_REQUEST,
+        constants.NOT_FOUND_MESSAGE
+      );
+    }
+
+    await orderService.updatePaymentStatus(orderId, true);
+
+    return APIHelpers.sendSuccess(res, null, constants.SUCCESS);
+  },
 };
