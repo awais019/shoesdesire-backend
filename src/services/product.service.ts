@@ -55,8 +55,56 @@ export default {
       return newProduct;
     });
   },
-  getAll: (category?: string, size?: string, color?: string) => {
+  getAll: (category?: string, size?: string, color?: string, q?: string) => {
     const filter = {} as any;
+    const query = q?.toLowerCase();
+
+    if (query) {
+      filter.OR = [
+        {
+          name: {
+            contains: query,
+            mode: "insensitive",
+          },
+        },
+        {
+          description: {
+            contains: query,
+            mode: "insensitive",
+          },
+        },
+        {
+          slug: {
+            contains: query,
+            mode: "insensitive",
+          },
+        },
+        {
+          ProductCategory: {
+            some: {
+              Category: {
+                name: {
+                  contains: query,
+                  mode: "insensitive",
+                },
+              },
+            },
+          },
+        },
+        {
+          ProductColor: {
+            some: {
+              Color: {
+                name: {
+                  contains: query,
+                  mode: "insensitive",
+                },
+              },
+            },
+          },
+        },
+      ];
+    }
 
     if (category) {
       filter.ProductCategory = {

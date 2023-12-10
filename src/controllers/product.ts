@@ -38,13 +38,14 @@ export default {
     return APIHelpers.sendSuccess(res, newProduct);
   },
   getAll: async (req: Request, res: Response) => {
-    const { category, size, color } = req.query as {
+    const { category, size, color, q } = req.query as {
       category: string | undefined;
       size: string | undefined;
       color: string | undefined;
+      q: string | undefined;
     };
 
-    const products = await productService.getAll(category, size, color);
+    const products = await productService.getAll(category, size, color, q);
 
     return APIHelpers.sendSuccess(
       res,
