@@ -86,4 +86,92 @@ export default {
 
     return APIHelpers.sendSuccess(res, null, constants.SUCCESS);
   },
+  getOrders: async (req: Request, res: Response) => {
+    const orders = await orderService.getAll();
+
+    const _orders = orders.map((order) => {
+      return {
+        id: order.id,
+        userName: order.User.firstName + " " + order.User.lastName,
+        productsCount: order.OrderDetail.length,
+        totalItems: order.OrderDetail.reduce(
+          (acc, curr) => acc + curr.quantity,
+          0
+        ),
+        total: order.total,
+      };
+    });
+
+    return APIHelpers.sendSuccess(res, _orders, constants.SUCCESS);
+  },
+  getOrder: async (req: Request, res: Response) => {
+    const orderId = req.params.orderId;
+
+    if (!orderId) {
+      return APIHelpers.sendError(
+        res,
+        constants.BAD_REQUEST,
+        constants.NOT_FOUND_MESSAGE
+      );
+    }
+
+    const order = await orderService.getById(orderId);
+
+    if (!order) {
+      return APIHelpers.sendError(
+        res,
+        constants.BAD_REQUEST,
+        constants.NOT_FOUND_MESSAGE
+      );
+    }
+
+    const _order = {
+      id: order.id,
+      userName: order.User.firstName + " " + order.User.lastName,
+      productsCount: order.OrderDetail.length,
+      status: order.status,
+      totalItems: order.OrderDetail.reduce(
+        (acc, curr) => acc + curr.quantity,
+        0
+      ),
+      total: order.total,
+      items: order.OrderDetail.map((item) => {
+        return {
+          id: item.id,
+          productName: item.Product.name,
+          quantity: item.quantity,
+          price: item.price,
+          size: item.Size.size,
+          color: item.Color.name,
+        };
+      }),
+    };
+
+    return APIHelpers.sendSuccess(res, _order, constants.SUCCESS);
+  },
+  updateOrderStatus: async (req: Request, res: Response) => {
+    const orderId = req.params.orderId;
+
+    if (!orderId) {
+      return APIHelpers.sendError(
+        res,
+        constants.BAD_REQUEST,
+        constants.NOT_FOUND_MESSAGE
+      );
+    }
+
+    const order = await orderService.getById(orderId);
+
+    if (!order) {
+      return APIHelpers.sendError(
+        res,
+        constants.BAD_REQUEST,
+        constants.NOT_FOUND_MESSAGE
+      );
+    }
+
+    await orderService.updateShippingStatus(orderId, req.body.status);
+
+    return APIHelpers.sendSuccess(res, null, constants.SUCCESS);
+  },
 };

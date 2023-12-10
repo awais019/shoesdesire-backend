@@ -1,3 +1,4 @@
+import { ORDERSTATUS } from "@prisma/client";
 import prisma from "../prisma/prisma";
 
 export default {
@@ -20,10 +21,35 @@ export default {
       select: {
         id: true,
         total: true,
+        paid: true,
+        status: true,
         User: {
           select: {
             firstName: true,
             lastName: true,
+          },
+        },
+        OrderDetail: {
+          select: {
+            id: true,
+            quantity: true,
+            price: true,
+            Product: {
+              select: {
+                name: true,
+              },
+            },
+            Size: {
+              select: {
+                size: true,
+              },
+            },
+            Color: {
+              select: {
+                name: true,
+                hex: true,
+              },
+            },
           },
         },
       },
@@ -67,6 +93,49 @@ export default {
       },
       data: {
         paid: paymentStatus,
+      },
+    });
+  },
+  updateShippingStatus: (orderId: string, shippingStatus: string) => {
+    return prisma.order.update({
+      where: {
+        id: orderId,
+      },
+      data: {
+        status:
+          shippingStatus == "pending"
+            ? ORDERSTATUS.PENDING
+            : shippingStatus == "shipped"
+            ? ORDERSTATUS.SHIPPED
+            : ORDERSTATUS.DELIVERED,
+      },
+    });
+  },
+  getAll: () => {
+    return prisma.order.findMany({
+      where: {
+        paid: true,
+      },
+      select: {
+        id: true,
+        User: {
+          select: {
+            firstName: true,
+            lastName: true,
+          },
+        },
+        total: true,
+        OrderDetail: {
+          select: {
+            quantity: true,
+            price: true,
+            Product: {
+              select: {
+                name: true,
+              },
+            },
+          },
+        },
       },
     });
   },
