@@ -41,4 +41,51 @@ export default {
       },
     });
   },
+  updateCartTotal: (cartId: string, total: number) => {
+    return prisma.cart.update({
+      where: {
+        id: cartId,
+      },
+      data: {
+        total: {
+          increment: total,
+        },
+      },
+    });
+  },
+  get: (cartId: string) => {
+    return prisma.cart.findUnique({
+      where: {
+        id: cartId,
+      },
+      include: {
+        CartItem: {
+          select: {
+            quantity: true,
+            Product: {
+              select: {
+                name: true,
+                price: true,
+                Images: {
+                  select: {
+                    url: true,
+                  },
+                },
+              },
+            },
+            Size: {
+              select: {
+                size: true,
+              },
+            },
+            Color: {
+              select: {
+                name: true,
+              },
+            },
+          },
+        },
+      },
+    });
+  },
 };

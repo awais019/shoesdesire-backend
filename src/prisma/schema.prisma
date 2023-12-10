@@ -52,6 +52,7 @@ model Size {
   id          String        @id @default(uuid())
   size        Int           @unique
   ProductSize ProductSize[]
+  CartItem    CartItem[]
 }
 
 model ProductSize {
@@ -69,6 +70,7 @@ model Color {
   name         String
   hex          String         @unique
   ProductColor ProductColor[]
+  CartItem     CartItem[]
 }
 
 model ProductColor {
@@ -124,6 +126,8 @@ model CartItem {
   Cart      Cart     @relation(fields: [cartId], references: [id])
   cartId    String
   Product   Product  @relation(fields: [productId], references: [id])
+  Size      Size     @relation(fields: [sizeId], references: [id])
+  Color     Color    @relation(fields: [colorId], references: [id])
   productId String
   sizeId    String
   colorId   String

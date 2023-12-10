@@ -7,6 +7,8 @@ const router = Router();
 
 router.post("/", tryCatch(cartController.create));
 
+router.get("/:id", tryCatch(cartController.get));
+
 router.put("/:id", tryCatch(cartController.addToCart));
 
 export default router;
