@@ -64,6 +64,7 @@ export default {
             quantity: true,
             Product: {
               select: {
+                id: true,
                 name: true,
                 price: true,
                 Images: {
@@ -81,6 +82,7 @@ export default {
             Color: {
               select: {
                 name: true,
+                hex: true,
               },
             },
           },
