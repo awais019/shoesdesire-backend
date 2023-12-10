@@ -61,6 +61,7 @@ export default {
       include: {
         CartItem: {
           select: {
+            id: true,
             quantity: true,
             Product: {
               select: {
@@ -86,6 +87,49 @@ export default {
               },
             },
           },
+        },
+      },
+    });
+  },
+  getCartItem: (cartId: string, cartItemId: string) => {
+    return prisma.cartItem.findUnique({
+      where: {
+        id: cartItemId,
+        cartId,
+      },
+      include: {
+        Product: {
+          select: {
+            id: true,
+            name: true,
+            price: true,
+            Images: {
+              select: {
+                url: true,
+              },
+            },
+          },
+        },
+        Size: {
+          select: {
+            size: true,
+          },
+        },
+        Color: {
+          select: {
+            name: true,
+            hex: true,
+          },
+        },
+      },
+    });
+  },
+  removeCartItem: (cartId: string, cartItemId: string) => {
+    return prisma.cartItem.delete({
+      where: {
+        id: cartItemId,
+        Cart: {
+          id: cartId,
         },
       },
     });

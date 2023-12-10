@@ -63,4 +63,34 @@ export default {
 
     return APIHelpers.sendSuccess(res, cart, constants.SUCCESS);
   },
+  removeCartItem: async (req: Request, res: Response) => {
+    const cartItemId = req.params.itemId;
+    const cartId = req.params.cartId;
+
+    if (!cartId || !cartItemId) {
+      return APIHelpers.sendError(
+        res,
+        constants.BAD_REQUEST,
+        constants.ID_NOT_PROVIDED_MESSAGE
+      );
+    }
+
+    const cartItem = await cartService.getCartItem(cartId, cartItemId);
+
+    if (!cartItem) {
+      return APIHelpers.sendError(
+        res,
+        constants.BAD_REQUEST,
+        constants.NOT_FOUND_MESSAGE
+      );
+    }
+
+    const total = cartItem.quantity * cartItem.Product.price;
+
+    await cartService.updateCartTotal(cartId, -total);
+
+    const cart = await cartService.removeCartItem(cartId, cartItemId);
+
+    return APIHelpers.sendSuccess(res, cart, constants.SUCCESS);
+  },
 };
