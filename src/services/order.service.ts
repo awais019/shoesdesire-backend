@@ -27,6 +27,7 @@ export default {
           select: {
             firstName: true,
             lastName: true,
+            email: true,
           },
         },
         OrderDetail: {

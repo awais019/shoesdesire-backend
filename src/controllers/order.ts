@@ -7,6 +7,9 @@ import productService from "../services/product.service";
 import jwtHelpers from "../helpers/jwt";
 import stripeHelpers from "../helpers/stripe";
 import { JwtPayload } from "jsonwebtoken";
+import emailHelpers from "../helpers/email";
+import ejsHelpers from "../helpers/ejs";
+import logger from "../startup/logger";
 
 export default {
   create: async (req: Request, res: Response) => {
@@ -171,6 +174,21 @@ export default {
     }
 
     await orderService.updateShippingStatus(orderId, req.body.status);
+
+    const html = await ejsHelpers.renderHTMLFile("orderStatus", {
+      name: order.User.firstName + " " + order.User.lastName,
+      status: req.body.status,
+    });
+
+    emailHelpers
+      .sendMail({
+        to: order.User.email,
+        subject: "Order Status Changed",
+        html,
+      })
+      .catch((err) => {
+        logger.error(err);
+      });
 
     return APIHelpers.sendSuccess(res, null, constants.SUCCESS);
   },
