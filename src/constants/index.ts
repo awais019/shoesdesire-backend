@@ -21,6 +21,7 @@ export default {
   FILE_NOT_FOUND_MESSAGE: "File not found",
   IMAGE_NOT_PROVIDED_MESSAGE: "Image not provided",
   INVALID_CREDENTIALS_MESSAGE: "Invalid credentials",
+  ID_NOT_PROVIDED_MESSAGE: "Id not provided",
 
   AUTH_HEADER_NAME: "x-auth-token",
 

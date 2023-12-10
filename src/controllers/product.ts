@@ -71,4 +71,40 @@ export default {
 
     return APIHelpers.sendSuccess(res, products);
   },
+  getById: async (req: Request, res: Response) => {
+    const { id } = req.params;
+    if (!id) {
+      return APIHelpers.sendError(
+        res,
+        constants.BAD_REQUEST,
+        constants.ID_NOT_PROVIDED_MESSAGE
+      );
+    }
+    const product = await productService.getById(id);
+
+    if (!product) {
+      return APIHelpers.sendError(
+        res,
+        constants.NOT_FOUND,
+        constants.NOT_FOUND_MESSAGE
+      );
+    }
+
+    return APIHelpers.sendSuccess(res, {
+      name: product.name,
+      description: product.description,
+      price: product.price,
+      images: product.Images,
+      sizes: product.ProductSize.map((size) => {
+        return { id: size.Size.id, size: size.Size.size };
+      }),
+      colors: product.ProductColor.map((color) => {
+        return {
+          id: color.Color.id,
+          name: color.Color.name,
+          hex: color.Color.hex,
+        };
+      }),
+    });
+  },
 };

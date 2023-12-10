@@ -141,4 +141,44 @@ export default {
       },
     });
   },
+  getById: (id: string) => {
+    return prisma.product.findUnique({
+      where: {
+        id,
+      },
+      select: {
+        id: true,
+        name: true,
+        description: true,
+        price: true,
+        Images: {
+          select: {
+            id: true,
+            url: true,
+          },
+        },
+        ProductSize: {
+          select: {
+            Size: {
+              select: {
+                id: true,
+                size: true,
+              },
+            },
+          },
+        },
+        ProductColor: {
+          select: {
+            Color: {
+              select: {
+                id: true,
+                name: true,
+                hex: true,
+              },
+            },
+          },
+        },
+      },
+    });
+  },
 };
