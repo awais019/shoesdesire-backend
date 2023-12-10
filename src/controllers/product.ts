@@ -91,6 +91,7 @@ export default {
     }
 
     return APIHelpers.sendSuccess(res, {
+      id: product.id,
       name: product.name,
       description: product.description,
       price: product.price,

@@ -10,4 +10,28 @@ export default {
 
     return APIHelpers.sendSuccess(res, cart, constants.SUCCESS);
   },
+
+  addToCart: async (req: Request, res: Response) => {
+    const cartId = req.params.id;
+
+    if (!cartId) {
+      return APIHelpers.sendError(
+        res,
+        constants.BAD_REQUEST,
+        constants.ID_NOT_PROVIDED_MESSAGE
+      );
+    }
+
+    const { productId, quantity, sizeId, colorId } = req.body;
+
+    const cart = await cartService.createorupdateCartItem(
+      cartId,
+      productId,
+      parseInt(quantity),
+      sizeId,
+      colorId
+    );
+
+    return APIHelpers.sendSuccess(res, cart, constants.SUCCESS);
+  },
 };

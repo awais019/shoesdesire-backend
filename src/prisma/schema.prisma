@@ -125,11 +125,13 @@ model CartItem {
   cartId    String
   Product   Product  @relation(fields: [productId], references: [id])
   productId String
-  size      Int
-  color     String
+  sizeId    String
+  colorId   String
   quantity  Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@unique([cartId, productId, sizeId, colorId])
 }
 
 model Order {
