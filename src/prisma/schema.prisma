@@ -53,6 +53,7 @@ model Size {
   size        Int           @unique
   ProductSize ProductSize[]
   CartItem    CartItem[]
+  OrderDetail OrderDetail[]
 }
 
 model ProductSize {
@@ -71,6 +72,7 @@ model Color {
   hex          String         @unique
   ProductColor ProductColor[]
   CartItem     CartItem[]
+  OrderDetail  OrderDetail[]
 }
 
 model ProductColor {
@@ -146,6 +148,7 @@ model Order {
   id          String        @id @default(uuid())
   total       Float
   status      ORDERSTATUS   @default(PENDING)
+  paid        Boolean       @default(false)
   User        User          @relation(fields: [userId], references: [id])
   userId      String
   createdAt   DateTime      @default(now())
@@ -157,10 +160,13 @@ model OrderDetail {
   id        String   @id @default(uuid())
   Order     Order    @relation(fields: [orderId], references: [id])
   orderId   String
+  price     Float
   Product   Product  @relation(fields: [productId], references: [id])
+  Size      Size     @relation(fields: [sizeId], references: [id])
+  Color     Color    @relation(fields: [colorId], references: [id])
   productId String
-  size      Int
-  color     String
+  sizeId    String
+  colorId   String
   quantity  Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

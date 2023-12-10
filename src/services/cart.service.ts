@@ -77,11 +77,13 @@ export default {
             },
             Size: {
               select: {
+                id: true,
                 size: true,
               },
             },
             Color: {
               select: {
+                id: true,
                 name: true,
                 hex: true,
               },
@@ -112,11 +114,13 @@ export default {
         },
         Size: {
           select: {
+            id: true,
             size: true,
           },
         },
         Color: {
           select: {
+            id: true,
             name: true,
             hex: true,
           },
