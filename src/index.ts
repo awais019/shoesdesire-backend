@@ -3,10 +3,12 @@ import dotenv from "dotenv";
 import helmet from "helmet";
 import fileUpload from "express-fileupload";
 import compression from "compression";
+import http from "http";
 
 import logger from "./startup/logger";
 import routes from "./startup/routes";
 import cors from "./startup/cors";
+import socket from "./startup/socket";
 import _static from "./middlewares/static";
 
 dotenv.config();
@@ -19,7 +21,14 @@ app.set("view engine", "ejs");
 cors(app);
 routes(app);
 
+const server = http.createServer(app);
+const io = socket(server);
+
 const port = process.env.PORT || 3000;
-app.listen(port, () => {
-  logger.info(`Server is up and running on port ${port}`);
+
+server.listen(port, () => {
+  logger.info(`Server started on port ${port}`);
 });
+
+export default server;
+export { io };
