@@ -34,7 +34,6 @@ export default {
             message: true,
             created_at: true,
             sender: true,
-            receiver: true,
           },
           orderBy: {
             created_at: "desc",
@@ -92,7 +91,6 @@ export default {
             message: true,
             created_at: true,
             sender: true,
-            receiver: true,
           },
           orderBy: {
             created_at: "desc",
@@ -106,7 +104,7 @@ export default {
       const unreadCount = await prisma.message.count({
         where: {
           conversationId: conversations[index]?.id,
-          receiver: _id,
+
           read: false,
         },
       });
@@ -119,19 +117,16 @@ export default {
     conversationId,
     message,
     sender,
-    receiver,
   }: {
     conversationId: string;
     message: string;
     sender: string;
-    receiver: string;
   }) => {
     const messages = await prisma.message.create({
       data: {
         conversationId,
         message,
         sender,
-        receiver,
       },
     });
     await prisma.conversation.update({
@@ -158,7 +153,6 @@ export default {
     return prisma.message.updateMany({
       where: {
         conversationId,
-        receiver: userId,
         read: false,
       },
       data: {

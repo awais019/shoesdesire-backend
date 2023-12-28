@@ -32,35 +32,12 @@ export default function socket(server: any) {
         conversationId: string;
         message: string;
         sender: string;
-        receiver: string;
       }) => {
         const message = await messageService.createMessage(data);
-
-        const socketsInRoom = io.sockets.adapter.rooms.get(data.conversationId);
-
-        if (socketsInRoom && socketsInRoom.size == 1) {
-          const conversations = await messageService.getConversations(
-            data.receiver
-          );
-          const receiverSocketId = clients.get(data.receiver);
-          io.to(receiverSocketId).emit(
-            "new-message",
-            conversations.map((conversation) => {
-              if (
-                conversation.Participant &&
-                conversation.Participant &&
-                conversation.Message
-              ) {
-                return {
-                  id: conversation.id,
-                  Participant: conversation.Participant.User,
-                  Message: conversation.Message[0],
-                };
-              }
-            })
-          );
-        }
         io.to(data.conversationId).emit("message", message);
+        logger.info(
+          `User ${data.sender} sent message to conversation ${data.conversationId}`
+        );
       }
     );
 
