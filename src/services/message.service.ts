@@ -67,7 +67,7 @@ export default {
       },
     });
   },
-  getConversations: async (_id: string) => {
+  getConversations: async () => {
     const conversations = await prisma.conversation.findMany({
       orderBy: {
         updated_at: "desc",

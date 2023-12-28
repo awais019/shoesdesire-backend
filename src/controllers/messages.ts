@@ -78,19 +78,7 @@ export default {
     );
   },
   getConversations: async (req: Request, res: Response) => {
-    const token = req.header(constants.AUTH_HEADER_NAME);
-
-    if (!token) {
-      return APIHelpers.sendError(
-        res,
-        constants.UNAUTHORIZED,
-        constants.UNAUTHORIZED_MESSAGE
-      );
-    }
-
-    const { _id } = JWTHelpers.decode(token) as JwtPayload;
-
-    const conversations = await messageService.getConversations(_id);
+    const conversations = await messageService.getConversations();
 
     return APIHelpers.sendSuccess(
       res,
@@ -99,8 +87,7 @@ export default {
           !conversation.Participant ||
           !conversation.Participant ||
           !conversation.Participant.User ||
-          !conversation.Message ||
-          !conversation.Message[0]
+          !conversation.Message
         ) {
           return APIHelpers.sendError(
             res,
@@ -110,7 +97,8 @@ export default {
         }
 
         const participant = conversation.Participant.User;
-        const message = conversation.Message;
+        const message = conversation.Message[0];
+
         return {
           id: conversation.id,
           Participant: participant,
