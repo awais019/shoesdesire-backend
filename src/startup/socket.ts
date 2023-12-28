@@ -48,12 +48,12 @@ export default function socket(server: any) {
             conversations.map((conversation) => {
               if (
                 conversation.Participant &&
-                conversation.Participant[0] &&
+                conversation.Participant &&
                 conversation.Message
               ) {
                 return {
                   id: conversation.id,
-                  Participant: conversation.Participant[0].User,
+                  Participant: conversation.Participant.User,
                   Message: conversation.Message[0],
                 };
               }

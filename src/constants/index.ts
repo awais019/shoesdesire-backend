@@ -22,6 +22,7 @@ export default {
   IMAGE_NOT_PROVIDED_MESSAGE: "Image not provided",
   INVALID_CREDENTIALS_MESSAGE: "Invalid credentials",
   ID_NOT_PROVIDED_MESSAGE: "Id not provided",
+  BAD_REQUEST_MESSAGE: "Bad request",
 
   AUTH_HEADER_NAME: "x-auth-token",
 

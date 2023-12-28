@@ -8,20 +8,16 @@ export default {
       },
     });
   },
-  getConversation: (_id: string, userId: string) => {
+  getConversation: (userId: string) => {
     return prisma.conversation.findFirst({
       where: {
         Participant: {
-          every: {
-            userId: {
-              in: [_id, userId],
-            },
-          },
+          userId,
         },
       },
+
       include: {
         Participant: {
-          where: { userId: { not: _id } },
           select: {
             User: {
               select: {
@@ -48,25 +44,17 @@ export default {
       },
     });
   },
-  createConversation: (_id: string, userId: string) => {
+  createConversation: (userId: string) => {
     return prisma.conversation.create({
       data: {
         Participant: {
-          createMany: {
-            data: [
-              {
-                userId: _id,
-              },
-              {
-                userId: userId,
-              },
-            ],
+          create: {
+            userId,
           },
         },
       },
       include: {
         Participant: {
-          where: { userId: { not: _id } },
           select: {
             User: {
               select: {
@@ -82,20 +70,12 @@ export default {
   },
   getConversations: async (_id: string) => {
     const conversations = await prisma.conversation.findMany({
-      where: {
-        Participant: {
-          some: {
-            userId: _id,
-          },
-        },
-      },
       orderBy: {
         updated_at: "desc",
       },
       select: {
         id: true,
         Participant: {
-          where: { userId: { not: _id } },
           select: {
             User: {
               select: {
