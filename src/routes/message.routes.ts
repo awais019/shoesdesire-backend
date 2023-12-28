@@ -11,4 +11,9 @@ router.get(
   tryCatch(messageController.createorGetConversation)
 );
 
+router.get(
+  "/:conversationId/messages",
+  tryCatch(messageController.getMessages)
+);
+
 export default router;
